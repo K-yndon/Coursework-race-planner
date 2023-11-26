@@ -11,3 +11,16 @@ header = st.container()
 
 with header:
     st.title('Welcome to my project')
+'''
+hiding steamlit banner
+'''
+
+hide_st_style = """
+                <style>
+                #MainMenu {visibility: hidden;}
+                footer {visibility: hidden;}
+                header {visibility: hidden;}
+                </style>
+                """
+                
+st.markdown(hide_st_style, unsafe_allow_html=True)
