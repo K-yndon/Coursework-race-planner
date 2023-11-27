@@ -14,8 +14,9 @@ with header:
     st.title('Canoe Slalom Planner')
 
 with inputs:
-     textinput = st.text_input('Username','Enter username here')
-     textinput = st.text_input('Password','Enter password here')
+     username = st.text_input('Username','Enter username here')
+     password = st.text_input('Password','Enter password here')
+     st.markdown('Create account?')
 
 hide_st_style = """
                 <style>
