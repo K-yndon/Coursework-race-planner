@@ -9,11 +9,13 @@ import streamlit as st
 import pandas as pd 
 
 header = st.container()
-
+inputs = st.container()
 with header:
-    st.title('Welcome to my project')
+    st.title('Canoe Slalom Planner')
 
-
+with inputs:
+     textinput = text_input('Username','Enter username here')
+     textinput = text_input('Password','Enter password here')
 
 hide_st_style = """
                 <style>
