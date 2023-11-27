@@ -1,3 +1,6 @@
+import streamlit as st   
+import pandas as pd 
+
 # hiding streamlit style
 hide_st_style = """
                 <style>
@@ -8,9 +11,7 @@ hide_st_style = """
                 """               
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
-import streamlit as st   
-import pandas as pd 
-
+#Login page
 header = st.container()
 inputs = st.container()
 
