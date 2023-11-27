@@ -11,9 +11,6 @@ hide_st_style = """
                 """               
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
-[theme]
-backgroundColor = "#F0F0F0"
-
 #Login page
 header = st.container()
 inputs = st.container()
