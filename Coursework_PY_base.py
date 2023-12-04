@@ -31,9 +31,13 @@ authenticator = stauth.Authenticate(credentials, "app_home", "auth", cookie_expi
 
 name, authentication_status, username = authenticator.login("Login", "main")
 
-if authentication_status == True:
-    st.Title("welcome")
 if authentication_status == False:
   st.warning("enter username/password")
+
+if authentication_status:
+  st.Title("welcome")
+  authenticator.logout("logout","main")
+  
+
 
 
