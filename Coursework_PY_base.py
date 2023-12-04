@@ -33,3 +33,7 @@ name, authentication_status, username = authenticator.login("Login", "main")
 
 if authentication_status == True:
     authenticator.logout("logout","main")
+if authentication_status == False:
+  st.warning("enter username/password")
+
+
