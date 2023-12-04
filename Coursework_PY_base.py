@@ -33,7 +33,7 @@ name, authentication_status, username = authenticator.login("Login", "main")
 
 if authentication_status == False:
   st.error("Wrong username/password")
-if authentication_service == None:
+if authentication_status == None:
   st.warning("Please enter username/password")
 
 if authentication_status:
