@@ -19,6 +19,8 @@ names = ['John Smith','Rebecca Briggs']
 usernames = ['jsmith','rbriggs']
 passwords = ['123','456']
 
+hashed_passwords = stauth.hasher(passwords).generate()
+
 authenticator = stauth.authenticate(names,usernames,hashed_passwords,
     'some_cookie_name','some_signature_key',cookie_expiry_days=30)
 
