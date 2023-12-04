@@ -25,11 +25,7 @@ credentials = {
             usernames[0]:{
                 "name":names[0],
                 "password":passwords[0]
-                },
-            usernames[1]:{
-                "name":names[1],
-                "password":passwords[1]
-                }            
+                },            
             }
         }
 
