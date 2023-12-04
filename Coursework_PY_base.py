@@ -42,5 +42,22 @@ if not check_password():
 
 #Home page
 st.title("Welcome")
+def User_athlete():
+  RacePlans_clicked = st.button("Race plans")
+  StartList_clicked = st.button("Start lists")
+def User_coach():
+  ViewPlans_clicked = st.button("View Plans")
+  CreatePlans_clicked = st.button("Create Plans")
+  StartList_clicked = st.button("Start Lists")
+  ManageGroups_clicked = st.button("Manage Groups")
+
+user_type = "coach"
+if user_type == "athlete":
+  User_athlete()
+
+if user_type == "coach":
+  User_coach()
+  
+  
 
 
