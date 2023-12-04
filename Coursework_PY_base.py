@@ -28,7 +28,7 @@ def check_password():
 
     # Setting layout and inputs
     st.title('Canoe Slalom Planner')
-    username = st.text_input('Username','Enter username here')
+    username = st.text_input('Username')
     st.text_input("Password", type="password", on_change=password_entered, key="password")
     Create_clicked = st.button('Create account?')
    
