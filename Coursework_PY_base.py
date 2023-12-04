@@ -31,9 +31,5 @@ authenticator = stauth.Authenticate(credentials, "app_home", "auth", cookie_expi
 
 name, authentication_status, username = authenticator.login("Login", "main")
 
-if authentication_status:
-    st.title('Some content')
-elif authentication_status == False:
-    st.error('Username/password is incorrect')
-elif authentication_status == None:
-    st.warning('Please enter your username and password')
+if authentication_status == True:
+    authenticator.logout("logout","main")
