@@ -41,11 +41,13 @@ if not check_password():
 
 
 #Home page
-st.title("Welcome")
+st.title("Canoe slalom Planner")
 def User_athlete():
+  st.write("athlete home")
   RacePlans_clicked = st.button("Race plans")
   StartList_clicked = st.button("Start lists")
 def User_coach():
+  st.write("coach home")
   ViewPlans_clicked = st.button("View Plans")
   CreatePlans_clicked = st.button("Create Plans")
   StartList_clicked = st.button("Start Lists")
