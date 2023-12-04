@@ -22,10 +22,14 @@ passwords = ['123','456']
 hashed_passwords = stauth.Hasher(passwords).generate()
 credentials = {
         "usernames":{
-            usernames[0]:{
-                "name":names[0],
-                "password":passwords[0]
-                },            
+            "jsmith92":{
+                "name":"john smith",
+                "password":"$2b$12$TSuKwWML0EpbohBQgHx4p8E5q"
+                },
+            "tturner":{
+                "name":"timmy turner",
+                "password":"$2b$12$asdaUduuibuEIyBUBHASD896a"
+                }            
             }
         }
 
