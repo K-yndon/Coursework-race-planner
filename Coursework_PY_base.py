@@ -26,11 +26,12 @@ def check_password():
     if st.session_state.get("password_correct", False):
         return True
 
-    # Show input for password.
+    # Setting layout and inputs
+    st.title('Canoe Slalom Planner')
     username = st.text_input('Username','Enter username here')
-    st.text_input(
-        "Password", type="password", on_change=password_entered, key="password"
-    )
+    st.text_input("Password", type="password", on_change=password_entered, key="password")
+    Create_clicked = st.button('Create account?')
+   
     if "password_correct" in st.session_state:
         st.error("Password incorrect")
     return False
@@ -39,15 +40,7 @@ if not check_password():
     st.stop()  # Do not continue if check_password is not True.
 
 
-#Login page
-header = st.container()
-inputs = st.container()
+#Home page
+st.title("Welcome")
 
-with header:
-    st.title('Canoe Slalom Planner')
-
-with inputs:
-     username = st.text_input('Username','Enter username here')
-     password = st.text_input('Password','Enter password here')
-     Create_clicked = st.button('Create account?')
 
