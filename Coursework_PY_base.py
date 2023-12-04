@@ -19,11 +19,17 @@ names = ['John Smith','Rebecca Briggs']
 usernames = ['jsmith','rbriggs']
 passwords = ['123','456']
 
-hashed_passwords = stauth.hasher(passwords).generate()
+hashed_passwords = stauth.Hasher(passwords).generate()
+credentials = {
+        "usernames":{
+            usernames[0]:{
+                "name":names[0],
+                "password":passwords[0]
+                },            
+            }
+        }
 
-authenticator = stauth.authenticate(names,usernames,hashed_passwords,
-    'some_cookie_name','some_signature_key',cookie_expiry_days=30)
-
+authenticator = stauth.Authenticate(credentials, "app_home", "auth", cookie_expiry_days=30)
 name, authentication_status = authenticator.login('Login','main')
 
 if authentication_status:
