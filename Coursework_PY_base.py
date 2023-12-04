@@ -1,5 +1,7 @@
 import streamlit as st   
 import pandas as pd 
+import streamlit_authenticator as stauth
+
 
 # hiding streamlit style
 hide_st_style = """
@@ -12,14 +14,20 @@ hide_st_style = """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
 #Login page
-header = st.container()
-inputs = st.container()
 
-with header:
-    st.title('Canoe Slalom Planner')
+names = ['John Smith','Rebecca Briggs']
+usernames = ['jsmith','rbriggs']
+passwords = ['123','456']
 
-with inputs:
-     username = st.text_input('Username','Enter username here')
-     password = st.text_input('Password','Enter password here')
-     Create_clicked = st.button('Create account?')
+hashed_passwords = stauth.hasher(passwords).generate()
+authenticator = stauth.authenticate(names,usernames,hashed_passwords,
+    'some_cookie_name','some_signature_key',cookie_expiry_days=30)
+name, authentication_status = authenticator.login('Login','main')
 
+if authentication_status:
+    st.write('Welcome *%s*' % (name))
+    st.title('Some content')
+elif authentication_status == False:
+    st.error('Username/password is incorrect')
+elif authentication_status == None:
+    st.warning('Please enter your username and password')
