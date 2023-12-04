@@ -29,7 +29,7 @@ for un, name, pw in zip(usernames, names, passwords):
 
 authenticator = stauth.Authenticate(credentials, "app_home", "auth", cookie_expiry_days=30)
 
-name, authentication_status = authenticator.login('Login','main')
+name, authentication_status, username = authenticator.login("Login", "main")
 
 if authentication_status:
     st.write('Welcome *%s*' % (name))
