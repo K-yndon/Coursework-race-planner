@@ -20,20 +20,15 @@ usernames = ['jsmith','rbriggs']
 passwords = ['123','456']
 
 hashed_passwords = stauth.Hasher(passwords).generate()
-credentials = {
-        "usernames":{
-            "jsmith92":{
-                "name":"john smith",
-                "password":"$2b$12$TSuKwWML0EpbohBQgHx4p8E5q"
-                },
-            "tturner":{
-                "name":"timmy turner",
-                "password":"$2b$12$asdaUduuibuEIyBUBHASD896a"
-                }            
-            }
-        }
+
+credentials = {"usernames":{}}
+
+for un, name, pw in zip(usernames, names, passwords):
+    user_dict = {"name":name,"password":pw}
+    credentials["usernames"].update({un:user_dict})
 
 authenticator = stauth.Authenticate(credentials, "app_home", "auth", cookie_expiry_days=30)
+
 name, authentication_status = authenticator.login('Login','main')
 
 if authentication_status:
