@@ -45,9 +45,19 @@ def create_account():
   S_name_new = st.text_input('Second name')
   Username_new = st.text_input('Username')
   Coach_state_new = st.selectbox('Are you primarily a coach or athlete?', ('Athlete', 'Coach'))
-  
+
+Create_clicked = st.button('Create account?')
+Guest_clicked = st.button('Continue as guest')
+Login_clicked = st.button('Login')
+
+if Login_clicked == True:
+  check_password()
 if Create_clicked == True:
   Create_account()
+
+
+
+
 #Home page
 st.title("Canoe slalom Planner")
 def User_athlete():
