@@ -12,6 +12,21 @@ hide_st_style = """
                 """               
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
+Create_clicked = st.button('Create account?')
+Guest_clicked = st.button('Continue as guest')
+Login_clicked = st.button('Login')
+
+def Create_account():
+  F_name_new = st.text_input('First name')
+  S_name_new = st.text_input('Second name')
+  Username_new = st.text_input('Username')
+  Coach_state_new = st.selectbox('Are you primarily a coach or athlete?', ('Athlete', 'Coach'))
+
+if Login_clicked == True:
+  check_password()
+if Create_clicked == True:
+  Create_account()
+
 def check_password():
     """Returns `True` if the user had the correct password."""
     def password_entered():
@@ -30,8 +45,6 @@ def check_password():
     st.title('Canoe Slalom Planner')
     Username = st.text_input('Username')
     st.text_input("Password", type="password", on_change=password_entered, key="password")
-    Create_clicked = st.button('Create account?')
-    Guest_clicked = st.button('Continue as guest')
    
     if "password_correct" in st.session_state:
         st.error("Password incorrect")
@@ -40,20 +53,6 @@ def check_password():
 if not check_password():
     st.stop()  # Do not continue if check_password is not True.
 
-def Create_account():
-  F_name_new = st.text_input('First name')
-  S_name_new = st.text_input('Second name')
-  Username_new = st.text_input('Username')
-  Coach_state_new = st.selectbox('Are you primarily a coach or athlete?', ('Athlete', 'Coach'))
-
-Create_clicked = st.button('Create account?')
-Guest_clicked = st.button('Continue as guest')
-Login_clicked = st.button('Login')
-
-if Login_clicked == True:
-  check_password()
-if Create_clicked == True:
-  Create_account()
 
 
 
