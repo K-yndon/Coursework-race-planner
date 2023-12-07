@@ -28,9 +28,10 @@ def check_password():
 
     # Setting layout and inputs
     st.title('Canoe Slalom Planner')
-    username = st.text_input('Username')
+    Username = st.text_input('Username')
     st.text_input("Password", type="password", on_change=password_entered, key="password")
     Create_clicked = st.button('Create account?')
+    Guest_clicked = st.button('Continue as guest')
    
     if "password_correct" in st.session_state:
         st.error("Password incorrect")
@@ -39,7 +40,14 @@ def check_password():
 if not check_password():
     st.stop()  # Do not continue if check_password is not True.
 
-
+def create_account():
+  F_name_new = st.text_input('First name')
+  S_name_new = st.text_input('Second name')
+  Username_new = st.text_input('Username')
+  Coach_state_new = st.selectbox('Are you primarily a coach or athlete?', ('Athlete', 'Coach'))
+  
+if Create_clicked == True:
+  Create_account()
 #Home page
 st.title("Canoe slalom Planner")
 def User_athlete():
