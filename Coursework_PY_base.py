@@ -40,7 +40,7 @@ def check_password():
 if not check_password():
     st.stop()  # Do not continue if check_password is not True.
 
-def create_account():
+def Create_account():
   F_name_new = st.text_input('First name')
   S_name_new = st.text_input('Second name')
   Username_new = st.text_input('Username')
