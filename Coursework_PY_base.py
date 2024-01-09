@@ -5,6 +5,14 @@ import hashlib
 from time import sleep
 from streamlit_gsheets import GSheetsConnection
 
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+
 def empty():
     ph.empty()
     sleep(0.01)
