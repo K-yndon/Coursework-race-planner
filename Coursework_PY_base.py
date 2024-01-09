@@ -1,82 +1,174 @@
-import streamlit as st   
-import pandas as pd 
-import hmac
+import streamlit as st
+import csv
+import pandas as pd
+import hashlib
+from time import sleep
+from streamlit_gsheets import GSheetsConnection
 
-# hiding streamlit style
-hide_st_style = """
-                <style>
-                #MainMenu {visibility: hidden;}
-                footer {visibility: hidden;}
-                header {visibility: hidden;}
-                </style>
-                """               
-st.markdown(hide_st_style, unsafe_allow_html=True)
+def empty():
+    ph.empty()
+    sleep(0.01)
 
-Create_clicked = st.button('Create account?')
-Guest_clicked = st.button('Continue as guest')
-Login_clicked = st.button('Login')
-
-def Create_account():
-  F_name_new = st.text_input('First name')
-  S_name_new = st.text_input('Second name')
-  Username_new = st.text_input('Username')
-  Coach_state_new = st.selectbox('Are you primarily a coach or athlete?', ('Athlete', 'Coach'))
-
-if Login_clicked == True:
-  check_password()
-if Create_clicked == True:
-  Create_account()
-
-def check_password():
-    """Returns `True` if the user had the correct password."""
-    def password_entered():
-        """Checks whether a password entered by the user is correct."""
-        if hmac.compare_digest(st.session_state["password"], st.secrets["password"]):
-            st.session_state["password_correct"] = True
-            del st.session_state["password"]  # Don't store the password.
-        else:
-            st.session_state["password_correct"] = False
-
-    # Return True if the passward is validated.
-    if st.session_state.get("password_correct", False):
-        return True
-
-    # Setting layout and inputs
-    st.title('Canoe Slalom Planner')
-    Username = st.text_input('Username')
-    st.text_input("Password", type="password", on_change=password_entered, key="password")
+st.title('Canoe slalom planner')
+if 'username' not in st.session_state: #making a username variable in session ready to store the current users unique username
+        st.session_state.username = ''
+        
+if 'login' not in st.session_state: #if a user hasn't logged in yet then displays the login form
+  username_inp = st.text_input('Username')
+  hash_object = hashlib.sha1(st.text_input("Password", type="password").encode())
+  password_inp = hash_object.hexdigest()
+  submit_button = st.button(label='submit')
    
-    if "password_correct" in st.session_state:
-        st.error("Password incorrect")
-    return False
-
-if not check_password():
-    st.stop()  # Do not continue if check_password is not True.
-
-
-
-
-
-#Home page
-st.title("Canoe slalom Planner")
-def User_athlete():
-  st.write("athlete home")
-  RacePlans_clicked = st.button("Race plans")
-  StartList_clicked = st.button("Start lists")
-def User_coach():
-  st.write("coach home")
-  ViewPlans_clicked = st.button("View Plans")
-  CreatePlans_clicked = st.button("Create Plans")
-  StartList_clicked = st.button("Start Lists")
-  ManageGroups_clicked = st.button("Manage Groups")
-
-user_type = "coach"
-if user_type == "athlete":
-  User_athlete()
-
-if user_type == "coach":
-  User_coach()
   
-  
+  if submit_button:
+      #checking passwords correct
+      password = ''
+      reader = csv.reader(open('username_pass.csv', 'r'))
+      for data in reader:
+          if data[0] == username_inp:
+              password = str(data[1])
+              
+      if password_inp == password:
+          st.session_state.username = username_inp
+          st.session_state['login'] = True
+          st.success("Login successful")
+          st.rerun()
+      else:
+        st.error('Login failed')
+          
+if 'login' not in st.session_state: #this means the create an account button will only be made if the user hasn't logged in yet        
+    if 'make' not in st.session_state:
+        create_button = st.button(label= 'create account', key = 'createbut')
+        if create_button:
+            st.session_state['make'] = True
+    
+if 'make' in st.session_state:
+    placeholder = st.empty()
+    # user can make an account
+    with placeholder.container():
+             
+        new_username = st.text_input("New Username")
+        
+        col1,col2 = st.columns(2) # seperates names into 2 columns so takes up less space
+        
+        fname = col1.text_input("First name")
+        sname = col2.text_input("Second name")
+        hash_object = hashlib.sha1(st.text_input("New password", type = 'password').encode())
+        new_password = hash_object.hexdigest()
+        athlete_coach = st.selectbox("type",("athlete","coach"))
+        
+        #different information is required from user depending if they are a coach or athlete
+        #displays the correct inputs once the user selects if they are an athelete or coach
+        if athlete_coach == "athlete":
+            classes_list = st.multiselect("Class",["K1W","C1W","C1M","K1M"])
+            division = []
+            for item in classes_list:
+                division.append( st.selectbox("What is your division for " + item,("prem", "1","2", "3", "4")))
+        if athlete_coach == "coach":
+            st.write("coach code:")
+            
+        #saving the details entered by the user into the accounts csv file
+        save_butt = st.button("Save")
+        data1 = [new_username, fname, sname, athlete_coach]
+        data2 = [new_username,new_password]
+        filename1 = 'accounts.csv'
+        filename2 = 'username_pass.csv'
+        if save_butt == True:
+            #saving to accounts file
+            with open(filename1, 'a') as file:
+                for x in data1:
+                        file.write(str(x)+',')
+                file.write('\n')
+            #saving username and hashed passwords to a file
+            with open(filename2, 'a') as file:
+                for x in data2:
+                        file.write(str(x)+',')
+                file.write('\n')
+            st.session_state.pop('make') #removes the fact create was clicked from session state so that the make an account doesn't appear again
+            placeholder.empty()  
+            
+def CreatePlans_clicked():
+          empty()
+          with ph.container():
+              conn = st.connection("gsheets", type=GSheetsConnection) #connecting to personal google sheets folder
+              df = conn.read(
+    worksheet="list of races",
+    ttl="0",
+    usecols=[0, 1],
+    nrows=3,
+)  #from google sheets 
+              st.dataframe(df)
+              updated_df = df.append({"race":'leevalley', "date": '04'}, ignore_index = True)
+              conn.update(worksheet='list of races', data = updated_df)
+              with st.sidebar:
+                  name = st.text_input('Enter name of raceplan')
+                  base =pd.DataFrame(index = range(5), columns=["name", "bib", "class", "time"])
+                  make = st.button('Create plan')
+                  if make:
+                      conn.create(worksheet = name, data = base )
+                  uploaded_files = st.file_uploader("Choose a file", accept_multiple_files=False)
+                  
+def ManageGroups_clicked(): # when user clicks manage groups this function should run and keep running until the user clicks a different main menu option
+    ph.empty() 
+    with ph.container():
+        st.write('manage groups')
+                  
+def StartList_clicked():  #should display 
+    empty()
+    with ph.container():
+        st.write('start list')
+        
+def ViewPlans_clicked():
+    empty()
+    with ph.container():
+        st.write('view plans')
+                  
+if 'login' in st.session_state: # if the login is succesful then clear the screen and load home options
+    st.empty()
+    if 'user_type' not in st.session_state: #creating a user type in session state so that relevant coach/athlete info can be shown
+        st.session_state.user_type = ''
 
+    reader = csv.reader(open('accounts.csv', 'r'))
+    #finding current user in csv and retrieving if they are an athlete or coach
+    for data in reader:
+        if data[0] == st.session_state.username:
+            st.session_state.user_type = str(data[3]) 
+    
+    ph = st.empty()
+        
 
+    if st.session_state.user_type == "athlete":
+      col1,col2 = st.columns(2) #columns to keep buttons at top and in line
+      RacePlans_clicked = col1.button("Race plans")
+      StartList_clicked = col2.button("Start lists")
+      if RacePlans_clicked == True:
+              empty()
+              with ph.container():
+                  st.write('race plans')
+     
+    
+    
+    if st.session_state.user_type == "coach":
+      col1,col2,col3,col4 = st.columns(4)   #put buttons in columns so that they stay in line at the top of the page
+     
+      if 'current' not in st.session_state:
+          st.session_state.current = None
+      
+      pages = {
+          0 : CreatePlans_clicked,
+          1 : ManageGroups_clicked,
+          2 : ViewPlans_clicked,
+          3 : StartList_clicked,
+      }
+   
+      if col1.button("Create Plans"):
+          st.session_state.current = 0
+      if col2.button("Manage Groups"):
+          st.session_state.current = 1
+      if col3.button("View Plans"):
+          st.session_state.current = 2
+      if col4.button("Start List"):
+          st.session_state.current = 3
+
+      if st.session_state.current != None:
+          pages[st.session_state.current]()
