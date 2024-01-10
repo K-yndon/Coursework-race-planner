@@ -3,7 +3,6 @@ import csv
 import pandas as pd
 import hashlib
 from time import sleep
-from streamlit_gsheets import GSheetsConnection
 
 hide_streamlit_style = """
             <style>
@@ -128,8 +127,15 @@ def StartList_clicked():  #should display
         
 def ViewPlans_clicked():
     empty()
+    conn = st.connection('mysql', type='sql')
+
+     # Perform query.
+     df = conn.query('SELECT * from bibs;', ttl=100)
+
     with ph.container():
         st.write('view plans')
+        for row in df.itertuples():
+                st.write(f"{row.bib} has a :{row.paddler}:")        
                   
 if 'login' in st.session_state: # if the login is succesful then clear the screen and load home options
     st.empty()
