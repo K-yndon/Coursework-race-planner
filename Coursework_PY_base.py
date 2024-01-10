@@ -97,22 +97,9 @@ if 'make' in st.session_state:
 def CreatePlans_clicked():
           empty()
           with ph.container():
-              conn = st.connection("gsheets", type=GSheetsConnection) #connecting to personal google sheets folder
-              df = conn.read(
-    worksheet="list of races",
-    ttl="0",
-    usecols=[0, 1],
-    nrows=3,
-)  #from google sheets 
-              st.dataframe(df)
-              updated_df = df.append({"race":'leevalley', "date": '04'}, ignore_index = True)
-              conn.update(worksheet='list of races', data = updated_df)
+              
               with st.sidebar:
                   name = st.text_input('Enter name of raceplan')
-                  base =pd.DataFrame(index = range(5), columns=["name", "bib", "class", "time"])
-                  make = st.button('Create plan')
-                  if make:
-                      conn.create(worksheet = name, data = base )
                   uploaded_files = st.file_uploader("Choose a file", accept_multiple_files=False)
                   
 def ManageGroups_clicked(): # when user clicks manage groups this function should run and keep running until the user clicks a different main menu option
