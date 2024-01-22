@@ -49,10 +49,10 @@ if 'login' not in st.session_state: #this means the create an account button wil
         if create_button:
             st.session_state['make'] = True
     
-if 'make' in st.session_state:
+if 'make' in st.session_state: #Form for making a new account and then saving the data to a csv
     placeholder = st.empty()
     # user can make an account
-    with placeholder.container():
+    with placeholder.container(): # allows the form to be cleared when a user logs in
              
         new_username = st.text_input("New Username")
         
@@ -150,12 +150,13 @@ if 'login' in st.session_state: # if the login is succesful then clear the scree
     
     
     if st.session_state.user_type == "coach":
-      col1,col2,col3,col4 = st.columns(4)   #put buttons in columns so that they stay in line at the top of the page
+      col1,col2,col3,col4 = st.columns(4)   #put buttons in columns so that they stay in line on the page at all times
+
      
-      if 'current' not in st.session_state:
+      if 'current' not in st.session_state: #this is a placeholder for what button is currently in use and so what needs to be displayed
           st.session_state.current = None
       
-      pages = {
+      pages = { #rather than writing out each new button  
           0 : CreatePlans_clicked,
           1 : ManageGroups_clicked,
           2 : ViewPlans_clicked,
