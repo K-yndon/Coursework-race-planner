@@ -124,8 +124,7 @@ def ViewPlans_clicked(): #coach
 
     with ph.container():
         st.write('view plans')
-        for row in df.itertuples():
-                st.write(f"{row.bib} has a :{row.paddler}:")        
+        st.datafram(df)   
 
 def StartLists_clicked():  #athlete
     empty()
