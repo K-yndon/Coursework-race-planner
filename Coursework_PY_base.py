@@ -94,7 +94,7 @@ if 'make' in st.session_state: #Form for making a new account and then saving th
             st.session_state.pop('make') #removes the fact create was clicked from session state so that the make an account doesn't appear again
             placeholder.empty()  
             
-def CreatePlans_clicked():
+def CreatePlans_clicked(): #coach
           empty()
           with ph.container():
               
@@ -102,17 +102,17 @@ def CreatePlans_clicked():
                   name = st.text_input('Enter name of raceplan')
                   uploaded_files = st.file_uploader("Choose a file", accept_multiple_files=False)
                   
-def ManageGroups_clicked(): # when user clicks manage groups this function should run and keep running until the user clicks a different main menu option
+def ManageGroups_clicked(): # coach, when user clicks manage groups this function should run and keep running until the user clicks a different main menu option
     ph.empty() 
     with ph.container():
         st.write('manage groups')
                   
-def StartList_clicked():  #should display 
+def StartList_clicked():  #coach
     empty()
     with ph.container():
         st.write('start list')
         
-def ViewPlans_clicked():
+def ViewPlans_clicked(): #coach
     empty()
     conn = st.connection('mysql', type='sql')
 
@@ -123,6 +123,15 @@ def ViewPlans_clicked():
         st.write('view plans')
         for row in df.itertuples():
                 st.write(f"{row.bib} has a :{row.paddler}:")        
+
+def StartLists_clicked():  #athlete
+    empty()
+    with ph.container():
+        st.write('start list')
+def RacePlans_clicked():  #athlete
+    empty()
+    with ph.container():
+        st.write('race plans')
                   
 if 'login' in st.session_state: # if the login is succesful then clear the screen and load home options
     st.empty()
@@ -140,18 +149,26 @@ if 'login' in st.session_state: # if the login is succesful then clear the scree
 
     if st.session_state.user_type == "athlete":
       col1,col2 = st.columns(2) #columns to keep buttons at top and in line
-      RacePlans_clicked = col1.button("Race plans")
-      StartList_clicked = col2.button("Start lists")
-      if RacePlans_clicked == True:
-              empty()
-              with ph.container():
-                  st.write('race plans')
-     
-    
-    
+      
+      if 'current' not in st.session_state: #this is a placeholder for what button is currently in use and so what needs to be displayed
+          st.session_state.current = None
+      
+      pages = { #rather than writing out each function name 
+          0 : RacePlans_clicked,
+          1 : StartLists_clicked,
+      }
+   
+      if col1.button("Race Plans"):
+          st.session_state.current = 0
+      if col2.button("Start List"):
+          st.session_state.current = 1
+
+      if st.session_state.current != None: #when current session state is set to a value, the function related to the page number is called e.g.create plans
+          pages[st.session_state.current]()
+
+            
     if st.session_state.user_type == "coach":
       col1,col2,col3,col4 = st.columns(4)   #put buttons in columns so that they stay in line on the page at all times
-
      
       if 'current' not in st.session_state: #this is a placeholder for what button is currently in use and so what needs to be displayed
           st.session_state.current = None
