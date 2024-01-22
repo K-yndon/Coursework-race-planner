@@ -85,12 +85,12 @@ if 'make' in st.session_state: #Form for making a new account and then saving th
         filename2 = 'username_pass.csv'
         if save_butt == True:
             #saving to accounts file
-            with open(filename1, 'a') as file:
+            with open(filename1, 'w') as file:
                 for x in data1:
                         file.write(str(x)+',')
                 file.write('\n')
             #saving username and hashed passwords to a file
-            with open(filename2, 'a') as file:
+            with open(filename2, 'w') as file:
                 for x in data2:
                         file.write(str(x)+',')
                 file.write('\n')
