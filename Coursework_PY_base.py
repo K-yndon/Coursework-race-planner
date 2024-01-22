@@ -17,6 +17,10 @@ def empty():
     sleep(0.01)
 
 st.title('Canoe slalom planner')
+logout = st.button('logout')
+if logout:
+            for key in st.session_state.keys():
+                del st.session_state[key]
 if 'username' not in st.session_state: #making a username variable in session ready to store the current users unique username
         st.session_state.username = ''
         
@@ -135,9 +139,7 @@ def RacePlans_clicked():  #athlete
                   
 if 'login' in st.session_state: # if the login is succesful then clear the screen and load home options
     st.empty()
-    logout = st.button('logout')
-    
-                            
+                              
     if 'user_type' not in st.session_state: #creating a user type in session state so that relevant coach/athlete info can be shown
         st.session_state.user_type = ''
 
@@ -194,6 +196,3 @@ if 'login' in st.session_state: # if the login is succesful then clear the scree
 
       if st.session_state.current != None: #when current session state is set to a value, the function related to the page number is called e.g.create plans
           pages[st.session_state.current]()
-if logout:
-   for key in st.session_state.keys():
-        del st.session_state[key]
