@@ -156,7 +156,7 @@ if 'login' in st.session_state: # if the login is succesful then clear the scree
       if 'current' not in st.session_state: #this is a placeholder for what button is currently in use and so what needs to be displayed
           st.session_state.current = None
       
-      pages = { #rather than writing out each new button  
+      pages = { #rather than writing out each function name 
           0 : CreatePlans_clicked,
           1 : ManageGroups_clicked,
           2 : ViewPlans_clicked,
@@ -172,5 +172,5 @@ if 'login' in st.session_state: # if the login is succesful then clear the scree
       if col4.button("Start List"):
           st.session_state.current = 3
 
-      if st.session_state.current != None:
+      if st.session_state.current != None: #when current session state is set to a value, the function related to the page number is called e.g.create plans
           pages[st.session_state.current]()
