@@ -124,7 +124,7 @@ def ViewPlans_clicked(): #coach
 
     with ph.container():
         st.write('view plans')
-        st.datafram(df)   
+        st.dataframe(df)   
 
 def StartLists_clicked():  #athlete
     empty()
