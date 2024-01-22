@@ -39,7 +39,7 @@ if 'login' not in st.session_state: #if a user hasn't logged in yet then display
           st.session_state.username = username_inp
           st.session_state['login'] = True
           st.success("Login successful")
-          st.rerun()
+          st.experimental_rerun()
       else:
         st.error('Login failed')
           
