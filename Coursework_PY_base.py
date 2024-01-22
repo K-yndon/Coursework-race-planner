@@ -117,7 +117,7 @@ def StartList_clicked():  #coach
         
 def ViewPlans_clicked(): #coach
     empty()
-    conn = st.connection('mysql', type='sql')
+    conn = st.experimental_connection('race_db', type='sql')
 
      # Perform query.
     df = conn.query('SELECT * from plan;', ttl=100)
