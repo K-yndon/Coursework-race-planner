@@ -1,7 +1,6 @@
 pandas==1.5.3
 streamlit==1.24.0
-SQLAlchemy==1.4
-Flask-SQLAlchemy
-mysqlclient
 mysql.connector
-sqlalchemy==2.0.22
+greenlet==3.0.3
+SQLAlchemy==2.0.25
+mysqlclient==2.2.1
