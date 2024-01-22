@@ -3,6 +3,5 @@ streamlit==1.24.0
 SQLAlchemy==1.4
 Flask-SQLAlchemy
 mysqlclient
-SQLAlchemy
 mysql.connector
-sqlalchemy
+sqlalchemy==2.0.22
