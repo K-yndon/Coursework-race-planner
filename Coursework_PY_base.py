@@ -120,7 +120,7 @@ def ViewPlans_clicked(): #coach
     conn = st.connection('mysql', type='sql')
 
      # Perform query.
-    df = conn.query('SELECT * from bibs;', ttl=100)
+    df = conn.query('SELECT * from plan;', ttl=100)
 
     with ph.container():
         st.write('view plans')
