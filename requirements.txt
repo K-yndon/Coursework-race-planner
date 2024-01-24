@@ -1,6 +1,2 @@
 pandas==1.5.3
 streamlit==1.24.0
-mysql.connector
-greenlet==3.0.3
-SQLAlchemy==2.0.25
-mysqlclient==2.2.1
