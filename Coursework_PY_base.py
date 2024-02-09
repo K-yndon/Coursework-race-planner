@@ -3,6 +3,8 @@ import csv
 import pandas as pd
 import hashlib
 from time import sleep
+from mysql.connector import Error
+import mysql.connector
 
 
 mydb = mysql.connector.connect(
